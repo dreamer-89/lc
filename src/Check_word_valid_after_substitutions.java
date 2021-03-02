@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 /*
 Problem Statement : 1003. Check If Word Is Valid After Substitutions
@@ -19,17 +19,17 @@ Time: O(N) Space: O(N) where N is the number of characters in input string
  */
 public class Check_word_valid_after_substitutions {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack();
+        ArrayDeque<Character> deque = new ArrayDeque();
         for(char c: s.toCharArray()) {
-            if (c == 'a' || c == 'b') stack.push(c);
+            if (c == 'a' || c == 'b') deque.offerFirst(c);
             else {
-                if (stack.size() < 2) return false; // Stack top must be b, followed by a. Size < 2 will make it impossible
-                char first = stack.pop();
-                char second = stack.pop();
+                if (deque.size() < 2) return false; // Stack top must be b, followed by a. Size < 2 will make it impossible
+                char first = deque.pollFirst();
+                char second = deque.pollFirst();
                 if (first != 'b' || second != 'a') return false; // Stack stores in LIFO
             }
         }
-        if (stack.isEmpty()) return true; // Processed all chars successfully
+        if (deque.isEmpty()) return true; // Processed all chars successfully
         return false;
     }
     public static void main(String args[]) {
